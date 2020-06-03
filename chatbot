@@ -1,0 +1,48 @@
+##server python code
+import socket
+s1=socket.socket()
+print('socket 1 created')
+s1.bind(('localhost',9999))
+s1.listen(2)
+print('waiting for connection')
+
+while True:
+    c1,addr=s1.accept()
+    c2,addr=s1.accept()
+    name1=c1.recv(1024).decode()
+    print("connect with",addr,name1)
+    name2 =c2.recv(1024).decode()
+    print("connect with", addr, name2)
+    c1.send(bytes("welcome Telusko",'utf-8'))
+    c2.send(bytes("welcome Telusko",'utf-8'))
+
+    while True:
+        print(name1,":", c1.recv(1024).decode())
+        print(name2,":" , c2.recv(1024).decode())
+
+
+    c1.close()
+ 
+##client1 python code
+import socket
+c1=socket.socket()
+c1.connect(("localhost",9999))
+name=input("enter the name:")
+c1.send(bytes(name,'utf-8'))
+print(c1.recv(1024).decode())
+
+while True:
+    message = input("enter the thing:")
+    c1.send(bytes(message, 'utf-8'))
+
+##client2 python code
+import socket
+c2=socket.socket()
+c2.connect(("localhost",9999))
+name=input("enter the name:")
+c2.send(bytes(name,'utf-8'))
+print(c2.recv(1024).decode())
+
+while True:
+    message = input("enter the thing:")
+    c2.send(bytes(message, 'utf-8'))
